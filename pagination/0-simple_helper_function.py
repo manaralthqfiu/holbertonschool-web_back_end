@@ -6,6 +6,7 @@ This module provides the index_range function, which calculates
 the start and end indexes for a given page and page size.
 """
 
+
 def index_range(page, page_size):
     """
     Return a tuple (start_index, end_index) for pagination.
