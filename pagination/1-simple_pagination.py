@@ -8,7 +8,16 @@ and provides a get_page method to paginate the data.
 
 import csv
 from typing import List
-from 0-simple_helper_function import index_range
+
+
+def index_range(page, page_size):
+    """
+    Return a tuple (start_index, end_index) for pagination.
+    Page numbers are 1-indexed.
+    """
+    start = (page - 1) * page_size
+    end = page * page_size
+    return (start, end)
 
 
 class Server:
