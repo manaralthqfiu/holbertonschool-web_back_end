@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Script that provides some stats about Nginx logs
-stored in MongoDB
+Advanced script that provides stats about Nginx logs,
+including top 10 IPs
 """
 from pymongo import MongoClient
 
 
 def log_stats():
     """
-    Provides statistics about Nginx logs
+    Provides statistics about Nginx logs and the top 10 most frequent IPs
     """
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
@@ -26,6 +26,16 @@ def log_stats():
         {"method": "GET", "path": "/status"}
     )
     print("{} status check".format(status_check))
+
+    print("IPs:")
+    pipeline = [
+        {"$group": {"_id": "$ip", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 10}
+    ]
+    top_ips = nginx_collection.aggregate(pipeline)
+    for ip in top_ips:
+        print("\t{}: {}".format(ip.get('_id'), ip.get('count')))
 
 
 if __name__ == "__main__":
