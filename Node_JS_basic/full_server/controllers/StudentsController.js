@@ -1,6 +1,4 @@
-import { readDatabase } from '../utils';
-
-export class StudentsController {
+export default class StudentsController {
   static getAllStudents(request, response) {
     const dbFile = process.argv[2];
 
@@ -38,5 +36,3 @@ export class StudentsController {
       .catch(() => response.status(500).send('Cannot load the database'));
   }
 }
-
-export default StudentsController;
