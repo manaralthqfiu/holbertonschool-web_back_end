@@ -8,8 +8,8 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
   ]).then((results) => results.map((result) => {
     if (result.status === 'rejected') {
       return {
-        status: result.status,
-        value: result.reason.message, // بدون Error:
+        status: 'rejected',
+        value: result.reason.replace('Error: ', ''), // إزالة Error:
       };
     }
     return result;
